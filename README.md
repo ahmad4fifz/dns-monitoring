@@ -53,4 +53,4 @@ sudo apt install libgeoip-dev -y
 
 ## License
 
-[MIT](https://choosealicense.com/licenses/mit/)
+[MIT](LICENSE)
