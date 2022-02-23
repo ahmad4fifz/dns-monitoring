@@ -3,7 +3,7 @@ import queue
 import dnstwist
 
 
-def engine(domain):
+def dnx(domain):
     url = dnstwist.UrlParser(domain)
     fuzz = dnstwist.Fuzzer(domain)
     fuzz.generate()
