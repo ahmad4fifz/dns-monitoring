@@ -1,25 +1,30 @@
+import json
 import queue
 
 import dnstwist
 
 
-def csv(domains=[]):
-    csv = ["fuzzer,domain,dns_a,dns_aaaa,dns_mx,dns_ns,geoip"]
-    for domain in domains:
-        csv.append(
-            ",".join(
-                [
-                    domain.get("fuzzer"),
-                    domain.get("domain"),
-                    ";".join(domain.get("dns_a", [])),
-                    ";".join(domain.get("dns_aaaa", [])),
-                    ";".join(domain.get("dns_mx", [])),
-                    ";".join(domain.get("dns_ns", [])),
-                    domain.get("geoip", ""),
-                ]
-            )
-        )
-    return "\n".join(csv)
+#def csv(domains=[]):
+#    csv = ["fuzzer,domain,dns_a,dns_aaaa,dns_mx,dns_ns,geoip"]
+#    for domain in domains:
+#        csv.append(
+#            ",".join(
+#                [
+#                    domain.get("fuzzer"),
+#                    domain.get("domain"),
+#                    ";".join(domain.get("dns_a", [])),
+#                    ";".join(domain.get("dns_aaaa", [])),
+#                    ";".join(domain.get("dns_mx", [])),
+#                    ";".join(domain.get("dns_ns", [])),
+#                    domain.get("geoip", ""),
+#                ]
+#            )
+#        )
+#    return "\n".join(csv)
+
+
+def out_json(domains=[]):
+    return json.dumps(domains, indent=4, sort_keys=True)
 
 
 def dnx(domain):
@@ -56,6 +61,6 @@ def dnx(domain):
 
     domains = fuzz.permutations(registered=True)
 
-    output = csv(domains)
+    output = out_json(domains)
 
     return output
