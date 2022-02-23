@@ -1,3 +1,4 @@
+import string
 from time import time
 
 from api.core.engine import SESSION_MAX, SESSION_TTL, THREADS, Session
@@ -15,37 +16,59 @@ router = APIRouter()
 sessions = []
 
 
-@router.post("/", response_description="domain added into the database")
-async def add_domain_data(domain: DomainSchema = Body(...)):
-    for s in sessions:
-        status = s.status()
-        if status["remaining"] == 0 and (status["timestamp"] + SESSION_TTL) < time():
-            sessions.remove(s)
-    if len(sessions) >= SESSION_MAX:
-        return (
-            ErrorResponseModel(
-                "An error occurred.",
-                500,
-                "Too many scan sessions - please retry in a minute",
-            ),
-        )
-    if "url" not in request.json:
-        return (ErrorResponseModel("An error occurred.", 400, "Invalid request"),)
-    for suburl in request.json["url"].split("."):
-        if len(suburl) > 15:
-            return (
-                ErrorResponseModel(
-                    "An error occurred.", 400, "Domain name is too long"
-                ),
-            )
-    try:
-        session = Session(request.json.get("url"))
-    except Exception as err:
-        return (ErrorResponseModel("An error occurred.", 400, "Invalid domain name"),)
-    else:
-        session.scan()
-        sessions.append(session)
-    return ResponseModel(session.status()), 201
+@router.get("/", response_description="domains retrieved")
+async def get_domains(domain: str):
+    domains = Session(domain)
+    if domains:
+        return ResponseModel(domains, "domains data retrieved successfully")
+    return ResponseModel(domains, "Empty list returned")
+
+
+#@router.get("/", response_description="domains retrieved")
+#async def get_domains():
+#    domains = await retrieve_domains()
+#    if domains:
+#        return ResponseModel(domains, "domains data retrieved successfully")
+#    return ResponseModel(domains, "Empty list returned")
+
+
+#@router.post("/", response_description="domain added into the database")
+#async def add_domain_data(domain: DomainSchema = Body(...)):
+#    domain = jsonable_encoder(domain)
+#    output_domain = await add_domain(domain)
+#    return ResponseModel(output_domain, "domain processed.")
+
+
+
+#    for s in sessions:
+#        status = s.status()
+#        if status["remaining"] == 0 and (status["timestamp"] + SESSION_TTL) < time():
+#            sessions.remove(s)
+#    if len(sessions) >= SESSION_MAX:
+#        return (
+#            ErrorResponseModel(
+#                "An error occurred.",
+#                500,
+#                "Too many scan sessions - please retry in a minute",
+#            ),
+#        )
+#    if "url" not in request.json:
+#        return (ErrorResponseModel("An error occurred.", 400, "Invalid request"),)
+#    for suburl in request.json["url"].split("."):
+#        if len(suburl) > 15:
+#            return (
+#                ErrorResponseModel(
+#                    "An error occurred.", 400, "Domain name is too long"
+#                ),
+#            )
+#    try:
+#        session = Session(request.json.get("url"))
+#    except Exception as err:
+#        return (ErrorResponseModel("An error occurred.", 400, "Invalid domain name"),)
+#    else:
+#        session.scan()
+#        sessions.append(session)
+#    return ResponseModel(session.status()), 201
 
 
 # async def add_domain_data(domain: DomainSchema = Body(...)):
@@ -54,12 +77,7 @@ async def add_domain_data(domain: DomainSchema = Body(...)):
 #    return ResponseModel(new_domain, "domain added successfully.")
 
 
-@router.get("/", response_description="domains retrieved")
-async def get_domains():
-    domains = await retrieve_domains()
-    if domains:
-        return ResponseModel(domains, "domains data retrieved successfully")
-    return ResponseModel(domains, "Empty list returned")
+
 
 
 @router.get("/{query}", response_description="domain data retrieved")
@@ -70,7 +88,6 @@ async def get_domain_data(query):
     return ErrorResponseModel("An error occurred.", 404, "domain doesn't exist.")
 
 
-# no UPDATE function
 
 # query domain instant (check in db 1st... if no record, query domain)
 
