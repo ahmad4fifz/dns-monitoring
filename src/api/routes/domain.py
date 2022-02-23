@@ -1,26 +1,27 @@
-import string
-from time import time
+#import string
+#from time import time
 
-#from api.core.engine import SESSION_MAX, SESSION_TTL, THREADS, Session
+from api.core.engine import dnx 
 from api.database.mongo import (
-    add_domain,
+#    add_domain,
     delete_domain,  # update_domain,
     retrieve_domain,
-    retrieve_domains,
+#    retrieve_domains,
 )
 from api.models.domain import DomainSchema, ErrorResponseModel, ResponseModel
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
+from fastapi.responses import JSONResponse
 
 router = APIRouter()
 sessions = []
 
 
-@router.get("/", response_description="domains retrieved")
+@router.get("/", response_model = DomainSchema, response_description="Domain sent to engine for processing")
 async def get_domains(domain: str):
-    domains = Session(domain)
+    domains = dnx(domain)
     if domains:
-        return ResponseModel(domains, "domains data retrieved successfully")
+        return ResponseModel(domains, "Domain's data retrieved from engine")
     return ResponseModel(domains, "Empty list returned")
 
 
