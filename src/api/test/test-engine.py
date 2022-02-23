@@ -1,6 +1,6 @@
 import argparse
 import queue
-
+import json
 import dnstwist
 
 
@@ -22,6 +22,8 @@ def csv(domains=[]):
         )
     return "\n".join(csv)
 
+def out_json(domains=[]):
+	return json.dumps(domains, indent=4, sort_keys=True)
 
 def dnx(domain):
     url = dnstwist.UrlParser(domain)
@@ -57,7 +59,7 @@ def dnx(domain):
 
     domains = fuzz.permutations(registered=True)
 
-    output = csv(domains)
+    output = out_json(domains)
 
     return output
 
