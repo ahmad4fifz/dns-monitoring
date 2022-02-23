@@ -3,7 +3,7 @@ import queue
 import dnstwist
 
 
-def csv_create(domains=[]):
+def csv(domains=[]):
     csv = ["fuzzer,domain,dns_a,dns_aaaa,dns_mx,dns_ns,geoip"]
     for domain in domains:
         csv.append(
@@ -56,6 +56,6 @@ def dnx(domain):
 
     domains = fuzz.permutations(registered=True)
 
-    output = csv_create(domains)
+    output = csv(domains)
 
     return output
