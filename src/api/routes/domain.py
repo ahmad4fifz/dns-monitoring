@@ -14,15 +14,12 @@ from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
 
 router = APIRouter()
-sessions = []
 
 
-@router.get("/", response_model = DomainSchema, response_description="Domain sent to engine for processing")
+@router.get("/", response_description="Domain sent to engine for processing")
 async def get_domains(domain: str):
     domains = dnx(domain)
-    if domains:
-        return ResponseModel(domains, "Domain's data retrieved from engine")
-    return ResponseModel(domains, "Empty list returned")
+    return domains
 
 
 #@router.get("/", response_description="domains retrieved")
