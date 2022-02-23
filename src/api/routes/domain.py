@@ -1,7 +1,7 @@
 from time import time
 
 from api.core.engine import SESSION_MAX, SESSION_TTL, THREADS, Session
-from api.database import (
+from api.database.mongo import (
     add_domain,
     delete_domain,
     retrieve_domain,
