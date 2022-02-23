@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  # Main API
+  api:
+    container_name: dns-api
+    image: dns-api
+    ports:
+      - "8000:8000"
+    restart: always
+    depends_on:
+      - mongodb
+
+  # Database 
+  mongodb:
+    container_name: dns-db
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - "mongodb:/data/db"
+      - "mongoconfig:/data/configdb"
+    environment:
+      - MONGO_INITDB_DATABASE=dnstwist
+      - MONGO_INITDB_ROOT_USERNAME=user
+      - MONGO_INITDB_ROOT_PASSWORD=SuP3rS3cR3T
+
+volumes:
+  mongodb:
+  mongoconfig:
