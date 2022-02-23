@@ -4,7 +4,7 @@ import queue
 import dnstwist
 
 
-#def csv(domains=[]):
+# def csv(domains=[]):
 #    csv = ["fuzzer,domain,dns_a,dns_aaaa,dns_mx,dns_ns,geoip"]
 #    for domain in domains:
 #        csv.append(
