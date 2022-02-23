@@ -3,16 +3,11 @@ from time import time
 from api.core.engine import SESSION_MAX, SESSION_TTL, THREADS, Session
 from api.database.mongo import (
     add_domain,
-    delete_domain,
+    delete_domain,  # update_domain,
     retrieve_domain,
     retrieve_domains,
-#    update_domain,
 )
-from api.models.domain import (
-    DomainSchema,
-    ErrorResponseModel,
-    ResponseModel,
-)
+from api.models.domain import DomainSchema, ErrorResponseModel, ResponseModel
 from fastapi import APIRouter, Body
 from fastapi.encoders import jsonable_encoder
 
@@ -74,23 +69,8 @@ async def get_domain_data(query):
         return ResponseModel(domain, "domain data retrieved successfully")
     return ErrorResponseModel("An error occurred.", 404, "domain doesn't exist.")
 
+
 # no UPDATE function
-
-#@router.put("/{query}")
-#async def update_domain_data(query: str, req: UpdateDomainModel = Body(...)):
-#    req = {k: v for k, v in req.dict().items() if v is not None}
-#    updated_domain = await update_domain(query, req)
-#    if updated_domain:
-#        return ResponseModel(
-#            "domain with query: {} name update is successful".format(query),
-#            "domain name updated successfully",
-#        )
-#    return ErrorResponseModel(
-#        "An error occurred",
-#        404,
-#        "There was an error updating the domain data.",
-#    )
-
 
 # query domain instant (check in db 1st... if no record, query domain)
 
