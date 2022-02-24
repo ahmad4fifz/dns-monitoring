@@ -23,10 +23,6 @@ def out_csv(domains=[]):
     return "\n".join(csv)
 
 
-def out_json(domains=[]):
-    return json.dumps(domains)
-
-
 def dnx(domain):
     url = dnstwist.UrlParser(domain)
     fuzz = dnstwist.Fuzzer(domain)
@@ -61,6 +57,4 @@ def dnx(domain):
 
     domains = fuzz.permutations(registered=True)
 
-    output = out_json(domains)
-
-    return output
+    return domains
