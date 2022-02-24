@@ -10,7 +10,17 @@ API for dns-monitoring using FastAPI
   docker-compose up --build -d
 ```
 
+## API Reference
 
+#### Query domain instantly
+
+```http
+  GET /api/v1/domain/
+```
+
+| Parameter | Type     | Description                   |
+| :-------- | :------- | :---------------------------- |
+| `domain`  | `string` | **Required**. Domain with TLD |
 
 ## Troubleshoot
 
