@@ -1,12 +1,12 @@
-#import string
-#from time import time
+# import string
+# from time import time
 
-from api.core.engine import dnx 
+from api.core.engine import dnx
 from api.database.mongo import (
-#    add_domain,
+    #    add_domain,
     delete_domain,  # update_domain,
     retrieve_domain,
-#    retrieve_domains,
+    #    retrieve_domains,
 )
 from api.models.domain import DomainSchema, ErrorResponseModel, ResponseModel
 from fastapi import APIRouter, Body
@@ -15,29 +15,26 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-# query domain instantly 
+# query domain instantly
 @router.get("/", response_description="Domain sent to engine for processing")
 async def get_domains(domain: str):
     domains = dnx(domain)
-    return domains # by default, FastAPI will return data in JSON format
+    return domains  # by default, FastAPI will return data in JSON format
 
 
-
-
-#@router.get("/", response_description="domains retrieved")
-#async def get_domains():
+# @router.get("/", response_description="domains retrieved")
+# async def get_domains():
 #    domains = await retrieve_domains()
 #    if domains:
 #        return ResponseModel(domains, "domains data retrieved successfully")
 #    return ResponseModel(domains, "Empty list returned")
 
 
-#@router.post("/", response_description="domain added into the database")
-#async def add_domain_data(domain: DomainSchema = Body(...)):
+# @router.post("/", response_description="domain added into the database")
+# async def add_domain_data(domain: DomainSchema = Body(...)):
 #    domain = jsonable_encoder(domain)
 #    output_domain = await add_domain(domain)
 #    return ResponseModel(output_domain, "domain processed.")
-
 
 
 #    for s in sessions:
@@ -77,18 +74,12 @@ async def get_domains(domain: str):
 #    return ResponseModel(new_domain, "domain added successfully.")
 
 
-
-
-
 @router.get("/{query}", response_description="domain data retrieved")
 async def get_domain_data(query):
     domain = await retrieve_domain(query)
     if domain:
         return ResponseModel(domain, "domain data retrieved successfully")
     return ErrorResponseModel("An error occurred.", 404, "domain doesn't exist.")
-
-
-
 
 
 # query domain, store in db, scheduler (add option to select schedule or not) schedule every 6h
