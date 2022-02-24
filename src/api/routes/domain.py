@@ -34,37 +34,6 @@ async def get_domains(domain: str):
 #    return ResponseModel(output_domain, "domain processed.")
 
 
-#    for s in sessions:
-#        status = s.status()
-#        if status["remaining"] == 0 and (status["timestamp"] + SESSION_TTL) < time():
-#            sessions.remove(s)
-#    if len(sessions) >= SESSION_MAX:
-#        return (
-#            ErrorResponseModel(
-#                "An error occurred.",
-#                500,
-#                "Too many scan sessions - please retry in a minute",
-#            ),
-#        )
-#    if "url" not in request.json:
-#        return (ErrorResponseModel("An error occurred.", 400, "Invalid request"),)
-#    for suburl in request.json["url"].split("."):
-#        if len(suburl) > 15:
-#            return (
-#                ErrorResponseModel(
-#                    "An error occurred.", 400, "Domain name is too long"
-#                ),
-#            )
-#    try:
-#        session = Session(request.json.get("url"))
-#    except Exception as err:
-#        return (ErrorResponseModel("An error occurred.", 400, "Invalid domain name"),)
-#    else:
-#        session.scan()
-#        sessions.append(session)
-#    return ResponseModel(session.status()), 201
-
-
 # async def add_domain_data(domain: DomainSchema = Body(...)):
 #    domain = jsonable_encoder(domain)
 #    new_domain = await add_domain(domain)
