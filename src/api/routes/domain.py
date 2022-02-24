@@ -1,6 +1,3 @@
-# import string
-# from time import time
-
 from api.core.engine import dnx
 from api.database.mongo import (
     #    add_domain,
