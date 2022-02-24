@@ -19,7 +19,9 @@ router = APIRouter()
 @router.get("/", response_description="Domain sent to engine for processing")
 async def get_domains(domain: str):
     domains = dnx(domain)
-    return domains
+    return domains # by default, FastAPI will return data in JSON format
+
+
 
 
 #@router.get("/", response_description="domains retrieved")
