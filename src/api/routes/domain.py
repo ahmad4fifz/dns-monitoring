@@ -15,7 +15,7 @@ from fastapi.responses import JSONResponse
 
 router = APIRouter()
 
-
+# query domain instantly 
 @router.get("/", response_description="Domain sent to engine for processing")
 async def get_domains(domain: str):
     domains = dnx(domain)
@@ -89,7 +89,7 @@ async def get_domain_data(query):
 
 
 
-# query domain instant (check in db 1st... if no record, query domain)
+
 
 # query domain, store in db, scheduler (add option to select schedule or not) schedule every 6h
 
