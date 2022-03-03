@@ -37,6 +37,4 @@ def dnx(domain):
 
     domains = fuzz.permutations(registered=True)
 
-    output = dnstwist.create_csv(domains)
-
-    return output
+    return domains
