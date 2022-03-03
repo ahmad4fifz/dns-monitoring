@@ -26,7 +26,7 @@ API for dns-monitoring using FastAPI
 
 ### GeoIP error during dnstwist installation
 
-#### Problem
+#### Debian
 
 ```bash
     ERROR: Command errored out with exit status 1:
@@ -53,11 +53,7 @@ ERROR: Command errored out with exit status 1: /dns-monitoring/venv/bin/python3 
 
 ```
 
-#### Fix
-
--> Install `libgeoip-dev` package.
-
-On Debian:
+> Fix: Install `libgeoip-dev` package.
 
 ```bash
 sudo apt install libgeoip-dev -y
